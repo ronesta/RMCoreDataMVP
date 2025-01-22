@@ -11,13 +11,13 @@ import SnapKit
 final class CharacterTableViewCell: UITableViewCell {
     static let id = "CharacterTableViewCell"
 
-    let activityIndicator: UIActivityIndicatorView = {
+    private let activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
 
-    let characterImageView: UIImageView = {
+    private let characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -50,7 +50,7 @@ final class CharacterTableViewCell: UITableViewCell {
         return button
     }()
 
-    let markerImageView: UIImageView = {
+    private let markerImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -66,8 +66,8 @@ final class CharacterTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let statusLabel: CustomUILabel = {
-        let label = CustomUILabel()
+    private let statusLabel: StatusLabel = {
+        let label = StatusLabel()
         label.font = UIFont.systemFont(ofSize: 17)
         label.layer.cornerRadius = 12
         label.clipsToBounds = true
@@ -159,7 +159,8 @@ final class CharacterTableViewCell: UITableViewCell {
         filter?.setValue(1.0, forKey: "inputIntensity")
 
         guard let outputImage = filter?.outputImage,
-              let cgImage = CIContext().createCGImage(outputImage, from: outputImage.extent) else {
+              let cgImage = CIContext().createCGImage(outputImage, from: outputImage.extent
+              ) else {
             return nil
         }
 
@@ -191,19 +192,3 @@ final class CharacterTableViewCell: UITableViewCell {
         }
     }
 }
-
-class CustomUILabel: UILabel {
-    var textInsets = UIEdgeInsets(top: 5, left: 9, bottom: 5, right: 9)
-
-    override func drawText(in rect: CGRect) {
-        let paddedRect = rect.inset(by: textInsets)
-        super.drawText(in: paddedRect)
-    }
-
-    override var intrinsicContentSize: CGSize {
-        let size = super.intrinsicContentSize
-        return CGSize(width: size.width + textInsets.left + textInsets.right,
-                       height: size.height + textInsets.top + textInsets.bottom)
-    }
-}
-
