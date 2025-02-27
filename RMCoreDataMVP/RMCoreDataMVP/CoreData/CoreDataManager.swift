@@ -33,6 +33,7 @@ public final class CoreDataManager: NSObject, StorageManagerProtocol {
             }
         }
     }
+    
     // swiftlint:disable:next function_parameter_count
     public func createOrUpdateCharacter(id: Int64,
                                         gender: String,
